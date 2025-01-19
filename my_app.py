@@ -18,6 +18,11 @@ class MainWin(QWidget):
         self.hello_text = QLabel(txt_hello)
         self.instruction = QLabel(txt_instruction)
         self.button = QPushButton(txt_next)
+
+        self.hello_text.setFont(QFont('Arial', 15, QFont.Bold)) 
+        self.instruction.setFont(QFont('Arial', 10))
+        self.button.setStyleSheet('QPushButton{background-color:lightblue; border-radius: 5px; width: 150px; height: 50px; font-size:16pt;} QPushButton::pressed{background-color:grey}')
+
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.hello_text, alignment=Qt.AlignCenter)
         self.layout.addWidget(self.instruction, alignment=Qt.AlignCenter)
@@ -32,5 +37,7 @@ class MainWin(QWidget):
         self.tw = TestWin()
 
 app = QApplication([])
+app.setFont(default_font) 
+app.setStyleSheet(default_button)
 mw = MainWin()
 app.exec_()

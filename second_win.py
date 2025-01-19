@@ -22,12 +22,12 @@ class TestWin(QWidget):
         self.name_in = QLineEdit('Full name')
         self.age = QLabel('Age')
         self.age_in = QLineEdit('Age in years')
-        self.test1_instruction = QLabel('Lie on your back and take your pulse for 15 seconds. click the "Start the first text" button to start the timer. Write down the result in the box below.')
+        self.test1_instruction = QLabel('Lie on your back and take your pulse for 15 seconds. \nClick the "Start the first text" button to start the timer. \nWrite down the result in the box below.')
         self.test1_start_btn = QPushButton('Start the first test')
         self.test1_in = QLineEdit('Pulse numbers')
-        self.test2_instruction = QLabel('Perform 30 squats in 45 seconds. To do this, click the "Start doing squats button to start the squat counter."')
+        self.test2_instruction = QLabel('Perform 30 squats in 45 seconds. \nTo do this, click the "Start doing squats button to start the squat counter."')
         self.test2_start_btn = QPushButton('Start doing squats')
-        self.test3_instruction = QLabel('Lie on your back and take your pulse for the first 15 seconds of the mminute, then for the last 15 seconds of the minute. \nPress the "Start final test" button to start the timer. \nThe seconds that should be measured are indicated in greene and the minutes that should not be measured are indicated in black. Write down the results in the appropriate fields.')
+        self.test3_instruction = QLabel('Lie on your back and take your pulse for the first 15 seconds of the minute, then for the last 15 seconds of the minute. \nPress the "Start final test" button to start the timer. \nThe seconds that should be measured are indicated in greene and the minutes that should not be measured are indicated in black. \nWrite down the results in the appropriate fields.')
         self.test3_start_btn = QPushButton('Start the final test')
         self.test3_in_1 = QLineEdit('0')
         self.test3_in_2 = QLineEdit('0')
@@ -117,11 +117,11 @@ class TestWin(QWidget):
             self.timer_ss_text.setText(str(self.count))
             if self.count == 0:
                 if self.timer1_start:
-                    self.timer1_start = False
                     self.count = 15
                 if self.timer2_start:
-                    self.timer2_start = False
                     self.count = 45
+                self.timer1_start = False
+                self.timer2_start = False
                 self.timer_ss_text.setHidden(True)
 
     def connects(self):
@@ -141,8 +141,17 @@ class TestWin(QWidget):
         self.health_result = index_evaluator(self.age,self.index_result,evaluation_matrix)
 
     def next_click(self):
-        self.calculate_index()
-        self.index_evaluation()
-        self.hide()
-        self.fw = FinalWin(self.index_result,self.health_result)
+        try:
+            self.calculate_index()
+            self.index_evaluation()
+            self.hide()
+            self.fw = FinalWin(self.index_result,self.health_result)
+        except:
+            self.msg = QMessageBox()
+            self.msg.setText("Please check if all information are entered correctly")
+            self.msg.setWindowTitle("Error")
+            btn = self.msg.setStandardButtons(QMessageBox.Ok)
+            self.msg.setStyleSheet('QPushButton{background-color:grey; border-radius: 2px; width: 80px; height: 40px; font-size:10pt;}')
+            retravel = self.msg.exec_()
+
 
