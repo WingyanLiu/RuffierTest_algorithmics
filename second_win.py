@@ -135,9 +135,12 @@ class TestWin(QWidget):
         self.p2 = int(self.test3_in_1.text())
         self.p3 = int(self.test3_in_2.text())
         self.index_result = (4*(self.p1+self.p2+self.p3)-200)/10
+        
 
     def index_evaluation(self):
         self.age = int(self.age_in.text())
+        if self.age < 7:
+            self.index_result = 'Not defined for this age'
         self.health_result = index_evaluator(self.age,self.index_result,evaluation_matrix)
 
     def next_click(self):

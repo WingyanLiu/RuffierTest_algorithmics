@@ -17,7 +17,13 @@ default_button = 'QPushButton{background-color:#7FFF00; border-radius: 5px; widt
 index_result = 0
 performance_result = 'n/a'
 
-evaluation_matrix = [['Age','Low','Satisfactory','Average','Above average','High'],
+txt_res1 = "low. See your doctor right away!"
+txt_res2 = "satisfactory. See your doctor!"
+txt_res3 = "average. It may be worth seeing your doctor to get checked out."
+txt_res4 = "above average"
+txt_res5 = "high"
+
+evaluation_matrix = [['Age',txt_res1,txt_res2,txt_res3,txt_res4,txt_res5],
                      [">=15",'>=15','11-14.9','6-10.9','0.5-5.9','<=0.4'],
                      ['13-14','>=16.5','12.5-16.4','7.5-12.4','2-7.4','<=1.9'],
                      ['11-12','>=18','14-17.9','9-13.9','3.5-8.9','<=3.4'],
@@ -42,17 +48,20 @@ def index_evaluator(age,index,matrix):
             range = var+range
             return range
         
-    
-    for i in range(1,len(matrix)):
-        age_bool = range_to_bool('age',matrix[i][0])
-        if eval(age_bool):
-            age_group = i
+    if age >= 7:
+        for i in range(1,len(matrix)):
+            age_bool = range_to_bool('age',matrix[i][0])
+            if eval(age_bool):
+                age_group = i
 
-    for n in range(1,len(matrix[age_group])):
-        level_bool = range_to_bool('index',matrix[age_group][n])
-        if eval(level_bool):
-            level = matrix[0][n]
+        for n in range(1,len(matrix[age_group])):
+            level_bool = range_to_bool('index',matrix[age_group][n])
+            if eval(level_bool):
+                level = matrix[0][n]
     
+    if age <7:
+        level = 'Not defined for this age.'
+
     return level
 
 index_evaluator(16,5,evaluation_matrix)
